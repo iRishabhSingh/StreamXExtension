@@ -1,48 +1,59 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { MediaProps } from "./App";
 import { Button } from "./components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Clapperboard, ListVideo, Music, Play } from "lucide-react";
 
 interface PlaylistProps {
   mediaFiles: MediaProps[];
+  currentMediaIndex: number;
+  setCurrentMediaIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Playlist: React.FC<PlaylistProps> = ({ mediaFiles }) => {
-  const [currentMediaIndex, setCurrentMediaIndex] = useState<number>(0);
-
-  useEffect(() => {
-    // Automatically play the first media file when the component mounts
-    if (mediaFiles.length > 0) {
-      playMedia(0);
-    }
-  }, [mediaFiles]);
-
-  const playMedia = (index: number) => {
-    setCurrentMediaIndex(index);
-    // Play the selected media file
-    // Your implementation for playing media goes here
-  };
-
-  const playNextMedia = () => {
-    if (currentMediaIndex < mediaFiles.length - 1) {
-      playMedia(currentMediaIndex + 1);
-    } else {
-      // Loop back to the first media file if reached the end of the playlist
-      playMedia(0);
-    }
-  };
-
+const Playlist: React.FC<PlaylistProps> = ({
+  mediaFiles,
+  currentMediaIndex,
+  setCurrentMediaIndex,
+}) => {
   return (
-    <div>
-      <h2>Playlist</h2>
-      <ul>
+    <Sheet>
+      <SheetTrigger>
+        <Button size="icon" variant="ghost" className="hover:bg-transparent">
+          <ListVideo width={24} height={24} />
+        </Button>
+      </SheetTrigger>
+      <SheetContent side={"left"}>
+        <SheetHeader>
+          <SheetTitle>Playlist</SheetTitle>
+        </SheetHeader>
         {mediaFiles.map((media, index) => (
-          <li key={media.mediaName}>
-            <Button onClick={() => playMedia(index)}>{media.mediaName}</Button>
-          </li>
+          <SheetHeader key={media.mediaName} className="m-2">
+            <Button
+              onClick={() => setCurrentMediaIndex(index)}
+              className="px-2 justify-start hover:bg-[#80808030]"
+              variant={`${index === currentMediaIndex ? "secondary" : "link"}`}
+            >
+              <span className="mr-2">
+                {index === currentMediaIndex ? (
+                  <Play width={15} height={15} />
+                ) : media.mediaType === "audio" ? (
+                  <Music width={15} height={15} />
+                ) : (
+                  <Clapperboard width={15} height={15} />
+                )}
+              </span>
+              {media.mediaName}
+            </Button>
+          </SheetHeader>
         ))}
-      </ul>
-      <button onClick={playNextMedia}>Play Next</button>
-    </div>
+      </SheetContent>
+    </Sheet>
   );
 };
 

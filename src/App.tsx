@@ -1,7 +1,8 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import "./App.css";
 import MediaInput from "./components/MediaInput/MediaInput";
 import MediaPlayer from "./components/MediaPlayer/MediaPlayer";
+import Playlist from "./Playlist";
 
 export interface MediaProps {
   mediaName: string;
@@ -12,6 +13,12 @@ export interface MediaProps {
 const App: React.FC = () => {
   const [playlist, setPlaylist] = useState<MediaProps[]>([]);
   const [currentMediaIndex, setCurrentMediaIndex] = useState<number>(0);
+
+  useEffect(() => {
+    if (playlist.length > 0) {
+      playMedia(currentMediaIndex);
+    }
+  }, [playlist, currentMediaIndex]);
 
   const handleMediaChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -45,6 +52,12 @@ const App: React.FC = () => {
     );
   };
 
+  const playMedia = (index: number) => {
+    setCurrentMediaIndex(index);
+    // Play the selected media file
+    // Your implementation for playing media goes here
+  };
+
   return (
     <div className="media-container relative">
       {!playlist.length && (
@@ -63,9 +76,14 @@ const App: React.FC = () => {
             autoPlay={currentMediaIndex === 0}
             media={playlist[currentMediaIndex]}
           />
-          <p className="absolute top-0 left-0 px-8 py-4 text-lg">
-            {playlist[currentMediaIndex].mediaName}
-          </p>
+          <div className="absolute top-0 left-0 px-8 py-4 text-lg flex items-center">
+            <Playlist
+              mediaFiles={playlist}
+              currentMediaIndex={currentMediaIndex}
+              setCurrentMediaIndex={setCurrentMediaIndex}
+            />
+            <span>{playlist[currentMediaIndex].mediaName}</span>
+          </div>
         </div>
       )}
     </div>
