@@ -27,7 +27,7 @@ const Playlist: React.FC<PlaylistProps> = ({
 
   return (
     <Sheet>
-      <SheetTrigger>
+      <SheetTrigger asChild>
         <Button size="icon" variant="ghost" className="hover:bg-transparent">
           <ListVideo width={24} height={24} />
         </Button>
