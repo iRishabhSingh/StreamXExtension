@@ -21,6 +21,10 @@ const Playlist: React.FC<PlaylistProps> = ({
   currentMediaIndex,
   setCurrentMediaIndex,
 }) => {
+  if (mediaFiles.length === 1) {
+    return null;
+  }
+
   return (
     <Sheet>
       <SheetTrigger>
