@@ -1,0 +1,21 @@
+.media-input-container {
+	position: relative;
+	cursor: pointer;
+}
+
+.media-input-container:hover {
+	background: #80808080;
+}
+
+.media-input {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+}
+
+.media-icon {
+	cursor: pointer;
+}
