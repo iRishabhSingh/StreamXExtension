@@ -3,6 +3,7 @@ import TogglePlay from "./TogglePlay";
 import ControlButtons from "./ControlButtons/ControlButtons";
 import MediaController from "./MediaController/MediaController";
 import { MediaProps } from "@/App";
+import ToggleFullScreen from "./ToggleFullScreen";
 
 interface ControllerProps {
   mediaRef: React.RefObject<HTMLMediaElement>;
@@ -27,7 +28,12 @@ const Controller = ({
         <span>{playlist[currentMediaIndex].mediaName}</span>
       </div>
       <ControlButtons>
-        <TogglePlay mediaRef={mediaRef} />
+        <div>
+          <TogglePlay mediaRef={mediaRef} />
+        </div>
+        <div>
+          <ToggleFullScreen />
+        </div>
       </ControlButtons>
     </MediaController>
   );
