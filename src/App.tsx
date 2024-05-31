@@ -1,9 +1,8 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import "./App.css";
+import Footer from "./components/Footer";
 import MediaInput from "./components/MediaInput/MediaInput";
 import MediaPlayer from "./components/MediaPlayer/MediaPlayer";
-import Playlist from "./Playlist";
-import Footer from "./components/Footer";
 
 export interface MediaProps {
   mediaName: string;
@@ -88,15 +87,10 @@ const App: React.FC = () => {
             onEnded={playNextMedia}
             autoPlay={currentMediaIndex === 0}
             media={playlist[currentMediaIndex]}
+            playlist={playlist}
+            currentMediaIndex={currentMediaIndex}
+            setCurrentMediaIndex={setCurrentMediaIndex}
           />
-          <div className="absolute top-0 left-0 px-8 py-4 text-lg flex items-center">
-            <Playlist
-              mediaFiles={playlist}
-              currentMediaIndex={currentMediaIndex}
-              setCurrentMediaIndex={setCurrentMediaIndex}
-            />
-            <span>{playlist[currentMediaIndex].mediaName}</span>
-          </div>
         </div>
       )}
     </div>

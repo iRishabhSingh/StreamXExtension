@@ -1,0 +1,35 @@
+.controller {
+	color: white;
+
+	z-index: 1;
+
+	opacity: 0;
+	transition: opacity 200ms ease-in-out;
+}
+
+.controller::before {
+	content: "";
+	bottom: 0;
+	width: 100%;
+	z-index: -1;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	aspect-ratio: 6 / 1;
+	pointer-events: none;
+	background: linear-gradient(to top, #000000bf, transparent);
+}
+
+/* Combine opacity rules for better consistency */
+.media-container:hover .controller,
+.media-container:focus-within .controller,
+.media-container.paused .controller:not(.hide),
+.controller.hide {
+	opacity: 1;
+}
+
+/* Remove duplicate opacity rule */
+.media-container:hover .controller.hide {
+	opacity: 0;
+}

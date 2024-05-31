@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import Controller from "../Controller";
+import { MediaProps } from "@/App";
 
 interface MediaPlayerProps {
   media: {
@@ -8,20 +10,39 @@ interface MediaPlayerProps {
   };
   onEnded: () => void;
   autoPlay: boolean;
+  playlist: MediaProps[];
+  currentMediaIndex: number;
+  setCurrentMediaIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const MediaPlayer: React.FC<MediaPlayerProps> = ({
   media,
   onEnded,
   autoPlay,
+  playlist,
+  currentMediaIndex,
+  setCurrentMediaIndex,
 }) => {
   const { mediaUrl, mediaType } = media;
+  const mediaRef = useRef<HTMLMediaElement>(null);
+
+  useEffect(() => {
+    if (mediaRef.current && autoPlay) {
+      mediaRef.current.play();
+    }
+  }, [autoPlay, mediaRef]);
 
   return (
-    <div className="h-screen w-screen flex items-center justify-center">
+    <div className="h-screen w-screen flex items-center justify-center media-container paused">
+      <Controller
+        mediaRef={mediaRef}
+        playlist={playlist}
+        currentMediaIndex={currentMediaIndex}
+        setCurrentMediaIndex={setCurrentMediaIndex}
+      />
       {mediaType === "audio" ? (
         <audio
-          controls
+          ref={mediaRef as React.RefObject<HTMLAudioElement>}
           onEnded={onEnded}
           autoPlay={autoPlay}
           className="max-h-screen"
@@ -32,10 +53,10 @@ const MediaPlayer: React.FC<MediaPlayerProps> = ({
         </audio>
       ) : (
         <video
-          controls
+          ref={mediaRef as React.RefObject<HTMLVideoElement>}
           onEnded={onEnded}
           autoPlay={autoPlay}
-          className="max-h-screen max-w-screen"
+          className="max-h-screen"
         >
           <source src={mediaUrl} type="video/mp4" />
           <track kind="captions" srcLang="en" label="English" />
