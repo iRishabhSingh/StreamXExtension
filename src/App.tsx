@@ -68,7 +68,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="media-container relative" id="media">
+    <div className="container relative" id="media">
       {!playlist.length && (
         <>
           <div className="no-media-container">

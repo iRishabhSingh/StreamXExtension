@@ -5,6 +5,7 @@ import { MediaProps } from "@/App";
 import ToggleFullScreen from "./ControlButtons/ToggleFullScreen";
 import PlayNext from "./ControlButtons/PlayNext";
 import PlayPrev from "./ControlButtons/PlayPrev";
+import Speaker from "./ControlButtons/Speaker";
 
 interface ControllerProps {
   mediaRef: React.RefObject<HTMLMediaElement>;
@@ -29,7 +30,7 @@ const Controller = ({
         <span>{playlist[currentMediaIndex].mediaName}</span>
       </div>
       <div className="absolute bottom-0 left-0 right-0 px-8 mb-4 flex justify-between">
-        <div className="flex gap-2">
+        <div className="flex">
           <PlayPrev
             currentMediaIndex={currentMediaIndex}
             setCurrentMediaIndex={setCurrentMediaIndex}
@@ -40,6 +41,7 @@ const Controller = ({
             currentMediaIndex={currentMediaIndex}
             setCurrentMediaIndex={setCurrentMediaIndex}
           />
+          <Speaker mediaRef={mediaRef} />
         </div>
         <div>
           <ToggleFullScreen />
