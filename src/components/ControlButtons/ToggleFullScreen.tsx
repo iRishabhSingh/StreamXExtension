@@ -1,4 +1,4 @@
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { Maximize, Minimize } from "lucide-react";
 import React, { useState, useEffect } from "react";
 

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import "./App.css";
-import Footer from "./components/Footer";
+import Footer from "./components/ControlButtons/Footer";
 import MediaInput from "./components/MediaInput/MediaInput";
 import MediaPlayer from "./components/MediaPlayer/MediaPlayer";
 

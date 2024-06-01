@@ -1,8 +1,8 @@
 import Playlist from "@/Playlist";
-import TogglePlay from "./TogglePlay";
+import TogglePlay from "./ControlButtons/TogglePlay";
 import MediaController from "./MediaController/MediaController";
 import { MediaProps } from "@/App";
-import ToggleFullScreen from "./ToggleFullScreen";
+import ToggleFullScreen from "./ControlButtons/ToggleFullScreen";
 
 interface ControllerProps {
   mediaRef: React.RefObject<HTMLMediaElement>;
