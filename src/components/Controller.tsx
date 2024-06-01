@@ -1,6 +1,5 @@
 import Playlist from "@/Playlist";
 import TogglePlay from "./TogglePlay";
-import ControlButtons from "./ControlButtons/ControlButtons";
 import MediaController from "./MediaController/MediaController";
 import { MediaProps } from "@/App";
 import ToggleFullScreen from "./ToggleFullScreen";
@@ -27,14 +26,14 @@ const Controller = ({
         />
         <span>{playlist[currentMediaIndex].mediaName}</span>
       </div>
-      <ControlButtons>
+      <div className="absolute bottom-0 left-0 right-0 px-8 mb-4 flex justify-between">
         <div>
           <TogglePlay mediaRef={mediaRef} />
         </div>
         <div>
           <ToggleFullScreen />
         </div>
-      </ControlButtons>
+      </div>
     </MediaController>
   );
 };
