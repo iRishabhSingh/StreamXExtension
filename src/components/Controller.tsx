@@ -8,6 +8,7 @@ import PlayPrev from "./ControlButtons/PlayPrev";
 import Speaker from "./ControlButtons/Speaker";
 import PlaybackTime from "./ControlButtons/PlaybackTime";
 import PictureInPictureButton from "./ControlButtons/PictureInPictureButton";
+import SettingsButton from "./ControlButtons/SettingsButton";
 
 interface ControllerProps {
   media: {
@@ -53,6 +54,7 @@ const Controller = ({
           <PlaybackTime mediaRef={mediaRef} />
         </div>
         <div className="flex">
+          <SettingsButton />
           <PictureInPictureButton mediaRef={mediaRef} media={media} />
           <ToggleFullScreen />
         </div>
