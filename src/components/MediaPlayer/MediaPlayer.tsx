@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import Controller from "../Controller";
 import { MediaProps } from "@/App";
 
-interface MediaPlayerProps {
+export interface MediaPlayerProps {
   media: {
     mediaName: string;
     mediaUrl: string;
@@ -35,6 +35,7 @@ const MediaPlayer: React.FC<MediaPlayerProps> = ({
   return (
     <div className="h-screen w-screen flex items-center justify-center media-container paused">
       <Controller
+        media={media}
         mediaRef={mediaRef}
         playlist={playlist}
         currentMediaIndex={currentMediaIndex}

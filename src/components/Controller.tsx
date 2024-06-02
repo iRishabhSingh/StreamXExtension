@@ -7,14 +7,21 @@ import PlayNext from "./ControlButtons/PlayNext";
 import PlayPrev from "./ControlButtons/PlayPrev";
 import Speaker from "./ControlButtons/Speaker";
 import PlaybackTime from "./ControlButtons/PlaybackTime";
+import PictureInPictureButton from "./ControlButtons/PictureInPictureButton";
 
 interface ControllerProps {
+  media: {
+    mediaName: string;
+    mediaUrl: string;
+    mediaType: string;
+  };
   mediaRef: React.RefObject<HTMLMediaElement>;
   playlist: MediaProps[];
   currentMediaIndex: number;
   setCurrentMediaIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 const Controller = ({
+  media,
   mediaRef,
   playlist,
   currentMediaIndex,
@@ -45,7 +52,8 @@ const Controller = ({
           <Speaker mediaRef={mediaRef} />
           <PlaybackTime mediaRef={mediaRef} />
         </div>
-        <div>
+        <div className="flex">
+          <PictureInPictureButton mediaRef={mediaRef} media={media} />
           <ToggleFullScreen />
         </div>
       </div>
