@@ -13,7 +13,6 @@ const Speaker: React.FC<SpeakerProps> = ({ mediaRef }) => {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      console.log(event.key);
       if (event.key.toLowerCase() === "m") {
         event.preventDefault();
         toggleMute();

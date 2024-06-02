@@ -6,6 +6,7 @@ import ToggleFullScreen from "./ControlButtons/ToggleFullScreen";
 import PlayNext from "./ControlButtons/PlayNext";
 import PlayPrev from "./ControlButtons/PlayPrev";
 import Speaker from "./ControlButtons/Speaker";
+import PlaybackTime from "./ControlButtons/PlaybackTime";
 
 interface ControllerProps {
   mediaRef: React.RefObject<HTMLMediaElement>;
@@ -42,6 +43,7 @@ const Controller = ({
             setCurrentMediaIndex={setCurrentMediaIndex}
           />
           <Speaker mediaRef={mediaRef} />
+          <PlaybackTime mediaRef={mediaRef} />
         </div>
         <div>
           <ToggleFullScreen />
