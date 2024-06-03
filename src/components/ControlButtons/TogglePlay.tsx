@@ -11,6 +11,7 @@ const TogglePlay: React.FC<TogglePlayProps> = ({ mediaRef }) => {
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent): void => {
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
       if (event.key === " " || event.key.toLowerCase() === "k") {
         event.preventDefault();
         togglePlay();
@@ -34,15 +35,7 @@ const TogglePlay: React.FC<TogglePlayProps> = ({ mediaRef }) => {
     return () => {
       media.removeEventListener("click", handleClick);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mediaRef]);
-
-  useEffect(() => {
-    const media = mediaRef.current;
-    if (media) {
-      setIsPlaying(!media.paused);
-    }
-  }, [mediaRef]);
+  });
 
   const togglePlay = (): void => {
     const media = mediaRef.current;
