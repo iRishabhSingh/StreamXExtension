@@ -76,6 +76,27 @@ const MediaInput: React.FC<MediaInputProps> = ({
     setPlaylist(playlist.filter((_, index) => index != indexToBeRemoved));
   };
 
+  if (playlist.length === 0) {
+    return (
+      <Button
+        size="icon"
+        variant="ghost"
+        className="flex cursor-pointer items-center justify-center hover:bg-transparent"
+      >
+        <FolderOpen width={20} height={20} />
+        <input
+          multiple
+          type="file"
+          id="zero-media-input"
+          className="media-input"
+          accept="audio/*, video/*"
+          placeholder="Select media"
+          onChange={handleMediaChange}
+        />
+      </Button>
+    );
+  }
+
   return (
     <Popover>
       <PopoverTrigger asChild>
