@@ -40,7 +40,7 @@ const Playlist: React.FC<PlaylistProps> = ({
           <SheetHeader key={media.mediaName} className="m-2">
             <Button
               onClick={() => setCurrentMediaIndex(index)}
-              className="px-2 justify-start hover:bg-[#80808030]"
+              className="justify-start px-2 hover:bg-[#80808030]"
               variant={`${index === currentMediaIndex ? "secondary" : "link"}`}
             >
               <span className="mr-2">

@@ -3,13 +3,18 @@ import { Button } from "../ui/button";
 import { Volume1, Volume2, VolumeX } from "lucide-react";
 
 interface SpeakerProps {
+  isHovered: boolean;
   mediaRef: React.RefObject<HTMLMediaElement>;
+  setIsHovered: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Speaker: React.FC<SpeakerProps> = ({ mediaRef }) => {
+const Speaker: React.FC<SpeakerProps> = ({
+  mediaRef,
+  isHovered,
+  setIsHovered,
+}) => {
   const [volume, setVolume] = useState<number>(1.0); // Initial volume between 0 and 1
   const [isMuted, setIsMuted] = useState<boolean>(false);
-  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -83,7 +88,6 @@ const Speaker: React.FC<SpeakerProps> = ({ mediaRef }) => {
         onClick={toggleMute}
         className="hover:bg-transparent"
         onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
       >
         {getVolumeIcon()}
       </Button>
@@ -99,7 +103,6 @@ const Speaker: React.FC<SpeakerProps> = ({ mediaRef }) => {
             aria-label="Volume Control"
             onChange={handleVolumeChange}
             onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
             className="h-[4px] w-full cursor-pointer rounded-full bg-gray-200 outline-none"
           />
         </div>
