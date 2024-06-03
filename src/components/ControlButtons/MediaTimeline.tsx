@@ -18,7 +18,21 @@ const MediaTimeline: React.FC<MediaTimelineProps> = ({ media, mediaRef }) => {
     const current = mediaRef.current;
     if (!current) return;
 
-    type KeyEvent = "j" | "l" | "ArrowLeft" | "ArrowRight";
+    type KeyEvent =
+      | "j"
+      | "l"
+      | "ArrowLeft"
+      | "ArrowRight"
+      | "0"
+      | "1"
+      | "2"
+      | "3"
+      | "4"
+      | "5"
+      | "6"
+      | "7"
+      | "8"
+      | "9";
 
     const handleKeyPress = (event: KeyboardEvent) => {
       const keyMap: Record<KeyEvent, number> = {
@@ -26,6 +40,16 @@ const MediaTimeline: React.FC<MediaTimelineProps> = ({ media, mediaRef }) => {
         l: 10,
         ArrowLeft: -5,
         ArrowRight: 5,
+        "0": 0 - current.currentTime,
+        "1": duration * 0.1 - current.currentTime,
+        "2": duration * 0.2 - current.currentTime,
+        "3": duration * 0.3 - current.currentTime,
+        "4": duration * 0.4 - current.currentTime,
+        "5": duration * 0.5 - current.currentTime,
+        "6": duration * 0.6 - current.currentTime,
+        "7": duration * 0.7 - current.currentTime,
+        "8": duration * 0.8 - current.currentTime,
+        "9": duration * 0.9 - current.currentTime,
       };
 
       const timeAdjustment = keyMap[event.key as KeyEvent];
@@ -52,7 +76,7 @@ const MediaTimeline: React.FC<MediaTimelineProps> = ({ media, mediaRef }) => {
       current.removeEventListener("timeupdate", updateProgress);
       current.removeEventListener("loadedmetadata", updateDuration);
     };
-  }, [mediaRef, media]);
+  }, [duration, mediaRef, media]);
 
   const handleTimelineClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
