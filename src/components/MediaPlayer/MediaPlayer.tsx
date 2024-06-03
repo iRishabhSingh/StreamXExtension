@@ -8,10 +8,11 @@ export interface MediaPlayerProps {
     mediaUrl: string;
     mediaType: string;
   };
-  onEnded: () => void;
   autoPlay: boolean;
+  onEnded: () => void;
   playlist: MediaProps[];
   currentMediaIndex: number;
+  setAutoPlay: React.Dispatch<React.SetStateAction<boolean>>;
   setCurrentMediaIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
@@ -20,9 +21,11 @@ const MediaPlayer: React.FC<MediaPlayerProps> = ({
   onEnded,
   autoPlay,
   playlist,
+  setAutoPlay,
   currentMediaIndex,
   setCurrentMediaIndex,
 }) => {
+  console.log(autoPlay);
   const { mediaUrl, mediaType } = media;
   const mediaRef = useRef<HTMLMediaElement>(null);
 
@@ -37,7 +40,9 @@ const MediaPlayer: React.FC<MediaPlayerProps> = ({
       <Controller
         media={media}
         mediaRef={mediaRef}
+        autoPlay={autoPlay}
         playlist={playlist}
+        setAutoPlay={setAutoPlay}
         currentMediaIndex={currentMediaIndex}
         setCurrentMediaIndex={setCurrentMediaIndex}
       />
