@@ -12,6 +12,7 @@ import SettingsButton from "./ControlButtons/SettingsButton";
 import ToggleAutoPlay from "./ControlButtons/ToggleAutoPlay";
 import MediaTimeline from "./ControlButtons/MediaTimeline";
 import { useState } from "react";
+import MediaInput from "./MediaInput/MediaInput";
 
 interface ControllerProps {
   media: {
@@ -24,6 +25,7 @@ interface ControllerProps {
   currentMediaIndex: number;
   mediaRef: React.RefObject<HTMLMediaElement>;
   setAutoPlay: React.Dispatch<React.SetStateAction<boolean>>;
+  setPlaylist: React.Dispatch<React.SetStateAction<MediaProps[]>>;
   setCurrentMediaIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
@@ -33,6 +35,7 @@ const Controller = ({
   playlist,
   autoPlay,
   setAutoPlay,
+  setPlaylist,
   currentMediaIndex,
   setCurrentMediaIndex,
 }: ControllerProps) => {
@@ -75,6 +78,12 @@ const Controller = ({
           </div>
 
           <div className="flex gap-2">
+            <MediaInput
+              playlist={playlist}
+              setPlaylist={setPlaylist}
+              currentMediaIndex={currentMediaIndex}
+              setCurrentMediaIndex={setCurrentMediaIndex}
+            />
             {playlist.length > 1 && (
               <ToggleAutoPlay autoPlay={autoPlay} setAutoPlay={setAutoPlay} />
             )}
