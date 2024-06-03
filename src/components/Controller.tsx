@@ -43,15 +43,13 @@ const Controller = ({
 
   return (
     <MediaController>
-      <div className="absolute left-0 top-0 flex items-center px-8 py-4 text-lg">
+      <div className="absolute left-0 top-0 flex items-center gap-2 px-8 py-4 text-lg">
         <Playlist
           mediaFiles={playlist}
           currentMediaIndex={currentMediaIndex}
           setCurrentMediaIndex={setCurrentMediaIndex}
         />
-        <span className="px-2 text-xl">
-          {playlist[currentMediaIndex].mediaName}
-        </span>
+        <span className="text-xl">{playlist[currentMediaIndex].mediaName}</span>
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 mb-4 flex flex-col gap-2 px-8">
