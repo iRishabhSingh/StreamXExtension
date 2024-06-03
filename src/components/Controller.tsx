@@ -87,7 +87,7 @@ const Controller = ({
             {playlist.length > 1 && (
               <ToggleAutoPlay autoPlay={autoPlay} setAutoPlay={setAutoPlay} />
             )}
-            <SettingsButton />
+            <SettingsButton mediaRef={mediaRef} />
             <PictureInPictureButton mediaRef={mediaRef} media={media} />
             <ToggleFullScreen />
           </div>
