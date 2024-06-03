@@ -36,7 +36,7 @@ const MediaPlayer: React.FC<MediaPlayerProps> = ({
   }, [autoPlay, mediaRef]);
 
   return (
-    <div className="h-screen w-screen flex items-center justify-center media-container paused">
+    <div className="media-container flex h-screen w-screen items-center justify-center paused">
       <Controller
         media={media}
         mediaRef={mediaRef}

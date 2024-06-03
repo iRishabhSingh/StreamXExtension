@@ -47,7 +47,7 @@ const MediaInput: React.FC<{
             </div>
           )}
           {playlist.length === 0 && (
-            <p className="text-[#808080] rounded-sm py-[7px]">
+            <p className="rounded-sm py-[7px] text-[#808080]">
               Playlist is empty.
             </p>
           )}

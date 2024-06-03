@@ -50,7 +50,7 @@ const PlaybackTime: React.FC<PlaybackTimeProps> = ({ mediaRef }) => {
     <div className="playback-time mx-2 flex items-center justify-center">
       <Button
         variant="ghost"
-        className="text-sm p-0 hover:bg-transparent"
+        className="p-0 text-sm hover:bg-transparent"
         onClick={toggleTimeDisplay}
       >
         {showRemaining

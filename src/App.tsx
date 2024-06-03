@@ -58,7 +58,7 @@ const App: React.FC = () => {
 
   const playNextMedia = () => {
     setCurrentMediaIndex((prevIndex) =>
-      prevIndex < playlist.length - 1 ? prevIndex + 1 : 0
+      prevIndex < playlist.length - 1 ? prevIndex + 1 : 0,
     );
   };
 

@@ -88,7 +88,7 @@ const Speaker: React.FC<SpeakerProps> = ({ mediaRef }) => {
         {getVolumeIcon()}
       </Button>
       {isHovered && (
-        <div className="w-16 flex items-center justify-center">
+        <div className="flex w-16 items-center justify-center">
           <input
             min={0}
             max={1}
@@ -100,7 +100,7 @@ const Speaker: React.FC<SpeakerProps> = ({ mediaRef }) => {
             onChange={handleVolumeChange}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="w-full h-[4px] rounded-full outline-none cursor-pointer bg-gray-200"
+            className="h-[4px] w-full cursor-pointer rounded-full bg-gray-200 outline-none"
           />
         </div>
       )}
