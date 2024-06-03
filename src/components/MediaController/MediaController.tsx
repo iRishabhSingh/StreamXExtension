@@ -11,7 +11,7 @@ const MediaController: React.FC<MediaControllerProps> = ({ children }) => {
 
   const handleMouseInteraction = () => {
     setShowControls(true);
-    clearTimeout(hideControlsTimeout.current!);
+    clearTimeout(hideControlsTimeout.current);
     hideControlsTimeout.current = setTimeout(() => {
       setShowControls(false);
     }, 2000);
@@ -19,7 +19,7 @@ const MediaController: React.FC<MediaControllerProps> = ({ children }) => {
 
   const toggleControls = () => {
     setShowControls((prev) => !prev);
-    clearTimeout(hideControlsTimeout.current!);
+    clearTimeout(hideControlsTimeout.current);
   };
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const MediaController: React.FC<MediaControllerProps> = ({ children }) => {
     return () => {
       window.removeEventListener("mousemove", handleMouseInteraction);
       window.removeEventListener("click", toggleControls);
-      clearTimeout(hideControlsTimeout.current!);
+      clearTimeout(hideControlsTimeout.current);
     };
   }, []);
 

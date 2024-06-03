@@ -25,11 +25,7 @@ const Footer = () => {
         </Avatar>
 
         <div className="text-xs">
-          Made with&nbsp;
-          <span role="img" aria-label="love">
-            ❤️
-          </span>
-          &nbsp;by
+          <span>Made with ❤️ by</span>
           <span className="block font-semibold">Rishabh Singh</span>
         </div>
       </div>

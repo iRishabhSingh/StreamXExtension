@@ -1,17 +1,11 @@
 import React, { ChangeEvent, useEffect } from "react";
-import {
-  CircleX,
-  Clapperboard,
-  FolderOpen,
-  ListPlus,
-  Music,
-  Play,
-} from "lucide-react";
 import "./MediaInput.css";
 import { MediaProps } from "@/App";
 import { Button } from "../ui/button";
+import { MediaIcon } from "@/Playlist";
 import { Separator } from "../ui/separator";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { CircleX, FolderOpen, ListPlus } from "lucide-react";
 
 interface MediaInputProps {
   playlist: MediaProps[];
@@ -136,13 +130,7 @@ const MediaInput: React.FC<MediaInputProps> = ({
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span className="flex items-center justify-center">
-                        {index === currentMediaIndex ? (
-                          <Play width={12} height={12} />
-                        ) : media.mediaType === "audio" ? (
-                          <Music width={12} height={12} />
-                        ) : (
-                          <Clapperboard width={12} height={12} />
-                        )}
+                        <MediaIcon mediaType={media.mediaType} />
                       </span>
                       <span className="overflow-hidden">{media.mediaName}</span>
                     </div>

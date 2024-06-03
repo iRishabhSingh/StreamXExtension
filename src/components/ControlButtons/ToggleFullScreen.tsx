@@ -64,22 +64,20 @@ const ToggleFullScreen: React.FC = () => {
   }, [isFullScreen, setIsFullScreen]);
 
   return (
-    <>
-      <Button
-        size="icon"
-        variant="ghost"
-        onClick={toggleFullScreen}
-        className="toggle-fullscreen hover:bg-transparent"
-        title={isFullScreen ? "Exit Fullscreen" : "Fullscreen"}
-        aria-label={isFullScreen ? "Exit Fullscreen" : "Fullscreen"}
-      >
-        {isFullScreen ? (
-          <Minimize width={20} height={20} />
-        ) : (
-          <Maximize width={20} height={20} />
-        )}
-      </Button>
-    </>
+    <Button
+      size="icon"
+      variant="ghost"
+      onClick={toggleFullScreen}
+      className="toggle-fullscreen hover:bg-transparent"
+      title={isFullScreen ? "Exit Fullscreen" : "Fullscreen"}
+      aria-label={isFullScreen ? "Exit Fullscreen" : "Fullscreen"}
+    >
+      {isFullScreen ? (
+        <Minimize width={20} height={20} />
+      ) : (
+        <Maximize width={20} height={20} />
+      )}
+    </Button>
   );
 };
 
