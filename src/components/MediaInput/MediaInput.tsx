@@ -1,5 +1,12 @@
 import React, { ChangeEvent, useEffect } from "react";
-import { Clapperboard, FolderOpen, ListPlus, Music, Play } from "lucide-react";
+import {
+  CircleX,
+  Clapperboard,
+  FolderOpen,
+  ListPlus,
+  Music,
+  Play,
+} from "lucide-react";
 import "./MediaInput.css";
 import { MediaProps } from "@/App";
 import { Button } from "../ui/button";
@@ -65,6 +72,10 @@ const MediaInput: React.FC<MediaInputProps> = ({
     // Your implementation for playing media goes here
   };
 
+  const removeMediaFromPlaylist = (indexToBeRemoved: number) => {
+    setPlaylist(playlist.filter((_, index) => index != indexToBeRemoved));
+  };
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -101,17 +112,29 @@ const MediaInput: React.FC<MediaInputProps> = ({
                   key={`${media.mediaName}_${index}`}
                   className="flex flex-col justify-center gap-2"
                 >
-                  <div className="flex items-center gap-2">
-                    <span className="flex items-center justify-center">
-                      {index === currentMediaIndex ? (
-                        <Play width={12} height={12} />
-                      ) : media.mediaType === "audio" ? (
-                        <Music width={12} height={12} />
-                      ) : (
-                        <Clapperboard width={12} height={12} />
-                      )}
-                    </span>
-                    <span className="overflow-hidden">{media.mediaName}</span>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="flex items-center justify-center">
+                        {index === currentMediaIndex ? (
+                          <Play width={12} height={12} />
+                        ) : media.mediaType === "audio" ? (
+                          <Music width={12} height={12} />
+                        ) : (
+                          <Clapperboard width={12} height={12} />
+                        )}
+                      </span>
+                      <span className="overflow-hidden">{media.mediaName}</span>
+                    </div>
+                    <div className="flex w-8 items-center justify-center">
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        onClick={() => removeMediaFromPlaylist(index)}
+                        className="hover:bg-transparent"
+                      >
+                        <CircleX width={15} height={15} />
+                      </Button>
+                    </div>
                   </div>
                   {index < playlist.length - 1 && (
                     <Separator className="my-2" />
