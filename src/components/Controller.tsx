@@ -10,6 +10,7 @@ import PlaybackTime from "./ControlButtons/PlaybackTime";
 import PictureInPictureButton from "./ControlButtons/PictureInPictureButton";
 import SettingsButton from "./ControlButtons/SettingsButton";
 import ToggleAutoPlay from "./ControlButtons/ToggleAutoPlay";
+import MediaTimeline from "./ControlButtons/MediaTimeline";
 
 interface ControllerProps {
   media: {
@@ -24,6 +25,7 @@ interface ControllerProps {
   setAutoPlay: React.Dispatch<React.SetStateAction<boolean>>;
   setCurrentMediaIndex: React.Dispatch<React.SetStateAction<number>>;
 }
+
 const Controller = ({
   media,
   mediaRef,
@@ -35,7 +37,7 @@ const Controller = ({
 }: ControllerProps) => {
   return (
     <MediaController>
-      <div className="absolute top-0 left-0 px-8 py-4 text-lg flex items-center">
+      <div className="absolute left-0 top-0 flex items-center px-8 py-4 text-lg">
         <Playlist
           mediaFiles={playlist}
           currentMediaIndex={currentMediaIndex}
@@ -43,28 +45,34 @@ const Controller = ({
         />
         <span>{playlist[currentMediaIndex].mediaName}</span>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 px-8 mb-4 flex justify-between">
-        <div className="flex">
-          <PlayPrev
-            currentMediaIndex={currentMediaIndex}
-            setCurrentMediaIndex={setCurrentMediaIndex}
-          />
-          <TogglePlay mediaRef={mediaRef} />
-          <PlayNext
-            playlist={playlist}
-            currentMediaIndex={currentMediaIndex}
-            setCurrentMediaIndex={setCurrentMediaIndex}
-          />
-          <Speaker mediaRef={mediaRef} />
-          <PlaybackTime mediaRef={mediaRef} />
-        </div>
-        <div className="flex">
-          {playlist.length > 1 && (
-            <ToggleAutoPlay autoPlay={autoPlay} setAutoPlay={setAutoPlay} />
-          )}
-          <SettingsButton />
-          <PictureInPictureButton mediaRef={mediaRef} media={media} />
-          <ToggleFullScreen />
+
+      <div className="absolute bottom-0 left-0 right-0 mb-4 flex flex-col gap-2 px-8">
+        <MediaTimeline media={media} mediaRef={mediaRef} />
+
+        <div className="flex justify-between">
+          <div className="flex">
+            <PlayPrev
+              currentMediaIndex={currentMediaIndex}
+              setCurrentMediaIndex={setCurrentMediaIndex}
+            />
+            <TogglePlay mediaRef={mediaRef} />
+            <PlayNext
+              playlist={playlist}
+              currentMediaIndex={currentMediaIndex}
+              setCurrentMediaIndex={setCurrentMediaIndex}
+            />
+            <Speaker mediaRef={mediaRef} />
+            <PlaybackTime mediaRef={mediaRef} />
+          </div>
+
+          <div className="flex">
+            {playlist.length > 1 && (
+              <ToggleAutoPlay autoPlay={autoPlay} setAutoPlay={setAutoPlay} />
+            )}
+            <SettingsButton />
+            <PictureInPictureButton mediaRef={mediaRef} media={media} />
+            <ToggleFullScreen />
+          </div>
         </div>
       </div>
     </MediaController>
