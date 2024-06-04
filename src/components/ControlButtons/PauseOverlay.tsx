@@ -18,7 +18,7 @@ const PlayPauseOverlay: React.FC<{ isPlaying: boolean }> = ({ isPlaying }) => {
   return (
     <div
       className={`flex h-[80px] w-[80px] items-center justify-center rounded-full bg-white bg-opacity-20 opacity-0 ${
-        shouldAnimate && "animate-grow-and-fade"
+        shouldAnimate ? "animate-grow-and-fade" : "hidden"
       }`}
     >
       <Pause width={40} height={40} />

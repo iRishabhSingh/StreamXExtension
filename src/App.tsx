@@ -16,6 +16,7 @@ const App: React.FC = () => {
   const [currentMediaIndex, setCurrentMediaIndex] = useState<number>(0);
 
   const playNextMedia = () => {
+    if (!autoPlay) return;
     setCurrentMediaIndex((prevIndex) =>
       prevIndex < playlist.length - 1 ? prevIndex + 1 : 0,
     );
