@@ -1,14 +1,18 @@
 import { Button } from "../ui/button";
 import { Pause, Play } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 interface TogglePlayProps {
   mediaRef: React.RefObject<HTMLMediaElement>;
+  isPlaying: boolean;
+  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const TogglePlay: React.FC<TogglePlayProps> = ({ mediaRef }) => {
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-
+const TogglePlay: React.FC<TogglePlayProps> = ({
+  mediaRef,
+  isPlaying,
+  setIsPlaying,
+}) => {
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent): void => {
       if (event.ctrlKey || event.metaKey || event.altKey) return;
