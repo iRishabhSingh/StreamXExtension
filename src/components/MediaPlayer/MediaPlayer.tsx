@@ -50,10 +50,11 @@ const MediaPlayer: React.FC<MediaPlayerProps> = ({
       />
       {mediaType === "audio" ? (
         <audio
-          ref={mediaRef as React.RefObject<HTMLAudioElement>}
+          key={mediaUrl}
           onEnded={onEnded}
           autoPlay={autoPlay}
           className="max-h-screen"
+          ref={mediaRef as React.RefObject<HTMLAudioElement>}
         >
           <source src={mediaUrl} type="audio/mp3" />
           <track kind="captions" srcLang="en" label="English" />
@@ -61,10 +62,11 @@ const MediaPlayer: React.FC<MediaPlayerProps> = ({
         </audio>
       ) : (
         <video
-          ref={mediaRef as React.RefObject<HTMLVideoElement>}
+          key={mediaUrl}
           onEnded={onEnded}
           autoPlay={autoPlay}
           className="max-h-screen"
+          ref={mediaRef as React.RefObject<HTMLVideoElement>}
         >
           <source src={mediaUrl} type="video/mp4" />
           <track kind="captions" srcLang="en" label="English" />
