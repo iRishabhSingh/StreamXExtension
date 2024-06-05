@@ -75,7 +75,7 @@ const MediaInput: React.FC<MediaInputProps> = ({
       <Button
         size="icon"
         variant="ghost"
-        className="flex cursor-pointer items-center justify-center hover:bg-transparent"
+        className="media-input-container flex items-center justify-center"
       >
         <FolderOpen width={20} height={20} />
         <input

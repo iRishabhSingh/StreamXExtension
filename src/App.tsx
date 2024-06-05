@@ -27,7 +27,7 @@ const App: React.FC = () => {
       {!playlist.length && (
         <>
           <div className="no-media-container">
-            <h1>Select or drag and drop to start playback.</h1>
+            <h1>Select a file here or drag and drop to initiate playback.</h1>
             <MediaInput
               playlist={playlist}
               setPlaylist={setPlaylist}
