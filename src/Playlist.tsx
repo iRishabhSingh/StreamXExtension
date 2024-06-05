@@ -1,6 +1,6 @@
-import React, { useMemo } from "react";
-import { MediaProps } from "./App";
-import { Button } from "./components/ui/button";
+import React from "react";
+import { Clapperboard, ListVideo, Music, Play } from "lucide-react";
+
 import {
   Sheet,
   SheetContent,
@@ -8,7 +8,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Clapperboard, ListVideo, Music, Play } from "lucide-react";
+import { MediaProps } from "./App";
+import { Button } from "./components/ui/button";
 
 interface PlaylistProps {
   mediaFiles: MediaProps[];
@@ -16,63 +17,22 @@ interface PlaylistProps {
   setCurrentMediaIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export const MediaIcon = React.memo(({ mediaType }: { mediaType: string }) => {
-  const icon = useMemo(() => {
-    switch (mediaType) {
-      case "audio":
-        return <Music width={15} height={15} />;
-      case "video":
-        return <Clapperboard width={15} height={15} />;
-      default:
-        return <Play width={15} height={15} />;
-    }
-  }, [mediaType]);
-
-  return icon;
-});
-
-const Playlist: React.FC<PlaylistProps> = ({
-  mediaFiles,
-  currentMediaIndex,
-  setCurrentMediaIndex,
-}) => {
-  if (mediaFiles.length <= 1) {
-    return null;
+export const MediaIcon: React.FC<{
+  index: number;
+  mediaType: string;
+  currentMediaIndex: number;
+}> = ({ index, mediaType, currentMediaIndex }) => {
+  if (index === currentMediaIndex) {
+    return <Play width={15} height={15} />;
+  } else if (mediaType === "video") {
+    return <Clapperboard width={15} height={15} />;
   }
-
-  return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button
-          size="icon"
-          variant="ghost"
-          className="hover:bg-transparent"
-          aria-label="Open playlist"
-        >
-          <ListVideo width={24} height={24} />
-        </Button>
-      </SheetTrigger>
-      <SheetContent side={"left"}>
-        <SheetHeader>
-          <SheetTitle>Playlist</SheetTitle>
-        </SheetHeader>
-        {mediaFiles.map((media, index) => (
-          <PlaylistItem
-            media={media}
-            index={index}
-            key={media.mediaName.concat(index.toString())}
-            currentMediaIndex={currentMediaIndex}
-            setCurrentMediaIndex={setCurrentMediaIndex}
-          />
-        ))}
-      </SheetContent>
-    </Sheet>
-  );
+  return <Music width={15} height={15} />;
 };
 
 interface PlaylistItemProps {
-  media: MediaProps;
   index: number;
+  media: MediaProps;
   currentMediaIndex: number;
   setCurrentMediaIndex: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -91,16 +51,61 @@ const PlaylistItem: React.FC<PlaylistItemProps> = ({
     <SheetHeader className="m-2">
       <Button
         onClick={handleClick}
-        className="justify-start px-2 hover:bg-[#80808030]"
-        variant={`${index === currentMediaIndex ? "secondary" : "link"}`}
-        aria-label={`${media.mediaType} ${media.mediaName}`}
+        className="justify-start overflow-hidden"
+        aria-label={`${media.mediaType}-${media.mediaName}`}
+        variant={`${index === currentMediaIndex ? "secondary" : "ghost"}`}
       >
         <span className="mr-2">
-          <MediaIcon mediaType={media.mediaType} />
+          <MediaIcon
+            index={index}
+            mediaType={media.mediaType}
+            currentMediaIndex={currentMediaIndex}
+          />
         </span>
-        {media.mediaName}
+        <span className="mr-2 w-full overflow-auto text-start">
+          {media.mediaName}
+        </span>
       </Button>
     </SheetHeader>
+  );
+};
+
+const Playlist: React.FC<PlaylistProps> = ({
+  mediaFiles,
+  currentMediaIndex,
+  setCurrentMediaIndex,
+}) => {
+  if (mediaFiles.length <= 1) {
+    return null;
+  }
+
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button
+          size="icon"
+          variant="ghost"
+          aria-label="Open playlist"
+          className="hover:bg-transparent"
+        >
+          <ListVideo width={24} height={24} />
+        </Button>
+      </SheetTrigger>
+      <SheetContent side={"left"}>
+        <SheetHeader>
+          <SheetTitle>Playlist</SheetTitle>
+        </SheetHeader>
+        {mediaFiles.map((media, index) => (
+          <PlaylistItem
+            media={media}
+            index={index}
+            key={`${media.mediaName}_${index}`}
+            currentMediaIndex={currentMediaIndex}
+            setCurrentMediaIndex={setCurrentMediaIndex}
+          />
+        ))}
+      </SheetContent>
+    </Sheet>
   );
 };
 

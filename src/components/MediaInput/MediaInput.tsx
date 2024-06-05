@@ -130,7 +130,11 @@ const MediaInput: React.FC<MediaInputProps> = ({
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span className="flex items-center justify-center">
-                        <MediaIcon mediaType={media.mediaType} />
+                        <MediaIcon
+                          index={index}
+                          mediaType={media.mediaType}
+                          currentMediaIndex={currentMediaIndex}
+                        />
                       </span>
                       <span className="overflow-hidden">{media.mediaName}</span>
                     </div>
