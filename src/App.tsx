@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import Footer from "./components/ControlButtons/Footer";
 import MediaInput from "./components/MediaInput/MediaInput";
+import DragAndDrop from "./components/DragAndDrop/DragAndDrop";
 import MediaPlayer from "./components/MediaPlayer/MediaPlayer";
 
 export interface MediaProps {
@@ -22,37 +23,49 @@ const App: React.FC = () => {
     );
   };
 
+  const handleFilesDrop = (files: File[]) => {
+    const newPlaylistItems: MediaProps[] = files.map((file) => ({
+      mediaUrl: URL.createObjectURL(file),
+      mediaName: file.name,
+      mediaType: file.type,
+    }));
+
+    setPlaylist((prevPlaylist) => [...prevPlaylist, ...newPlaylistItems]);
+  };
+
   return (
-    <div className="container relative" id="media">
-      {!playlist.length && (
-        <>
-          <div className="no-media-container">
-            <h1>Select a file here or drag and drop to initiate playback.</h1>
-            <MediaInput
+    <DragAndDrop onFilesDrop={handleFilesDrop}>
+      <div className="container relative" id="media">
+        {!playlist.length && (
+          <>
+            <div className="no-media-container">
+              <h1>Select or drag and drop to start playback.</h1>
+              <MediaInput
+                playlist={playlist}
+                setPlaylist={setPlaylist}
+                currentMediaIndex={currentMediaIndex}
+                setCurrentMediaIndex={setCurrentMediaIndex}
+              />
+            </div>
+            <Footer />
+          </>
+        )}
+        {playlist.length > 0 && (
+          <div>
+            <MediaPlayer
+              autoPlay={autoPlay}
               playlist={playlist}
+              onEnded={playNextMedia}
+              setAutoPlay={setAutoPlay}
               setPlaylist={setPlaylist}
+              media={playlist[currentMediaIndex]}
               currentMediaIndex={currentMediaIndex}
               setCurrentMediaIndex={setCurrentMediaIndex}
             />
           </div>
-          <Footer />
-        </>
-      )}
-      {playlist.length > 0 && (
-        <div>
-          <MediaPlayer
-            autoPlay={autoPlay}
-            playlist={playlist}
-            onEnded={playNextMedia}
-            setAutoPlay={setAutoPlay}
-            setPlaylist={setPlaylist}
-            media={playlist[currentMediaIndex]}
-            currentMediaIndex={currentMediaIndex}
-            setCurrentMediaIndex={setCurrentMediaIndex}
-          />
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </DragAndDrop>
   );
 };
 

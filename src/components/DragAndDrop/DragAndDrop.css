@@ -1,0 +1,55 @@
+.main-container {
+	position: relative;
+	cursor: pointer;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 100%;
+	height: 100%;
+}
+
+.drag-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #222222;
+
+	color: white;
+	font-size: 64px;
+	font-weight: 900;
+
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.drag-overlay::before,
+.drag-overlay::after {
+	content: "";
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	margin: 2rem;
+	border: 50px solid black;
+}
+
+.drag-overlay::before {
+	top: 0;
+	left: 0;
+	border-color: whitesmoke;
+	border-width: 30px 0 0 30px;
+	border-top-left-radius: 40px;
+}
+
+.drag-overlay::after {
+	right: 0;
+	bottom: 0;
+	border-color: whitesmoke;
+	border-width: 0 30px 30px 0;
+	border-bottom-right-radius: 40px;
+}
