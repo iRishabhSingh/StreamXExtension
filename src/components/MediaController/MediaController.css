@@ -21,14 +21,11 @@
 }
 
 /* Combine opacity rules for better consistency */
-.media-container:hover .controller,
-.media-container:focus-within .controller,
-.media-container.paused .controller:not(.hide),
-.controller.hide {
+.controller {
 	opacity: 1;
 }
 
 /* Remove duplicate opacity rule */
-.media-container:hover .controller.hide {
+.controller.hide {
 	opacity: 0;
 }

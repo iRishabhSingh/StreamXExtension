@@ -37,7 +37,7 @@ const MediaPlayer: React.FC<MediaPlayerProps> = ({
   }, [autoPlay, mediaRef]);
 
   return (
-    <div className="media-container flex h-screen w-screen items-center justify-center paused">
+    <div className="media-container paused">
       <Controller
         media={media}
         mediaRef={mediaRef}
@@ -48,31 +48,36 @@ const MediaPlayer: React.FC<MediaPlayerProps> = ({
         currentMediaIndex={currentMediaIndex}
         setCurrentMediaIndex={setCurrentMediaIndex}
       />
-      {mediaType === "audio" ? (
-        <audio
-          key={mediaUrl}
-          onEnded={onEnded}
-          autoPlay={autoPlay}
-          className="max-h-screen"
-          ref={mediaRef as React.RefObject<HTMLAudioElement>}
-        >
-          <source src={mediaUrl} type="audio/mp3" />
-          <track kind="captions" srcLang="en" label="English" />
-          Your browser does not support the audio element.
-        </audio>
-      ) : (
-        <video
-          key={mediaUrl}
-          onEnded={onEnded}
-          autoPlay={autoPlay}
-          className="max-h-screen"
-          ref={mediaRef as React.RefObject<HTMLVideoElement>}
-        >
-          <source src={mediaUrl} type="video/mp4" />
-          <track kind="captions" srcLang="en" label="English" />
-          Your browser does not support the video element.
-        </video>
-      )}
+      <div
+        id="player"
+        className="flex h-screen w-screen items-center justify-center"
+      >
+        {mediaType === "audio" ? (
+          <audio
+            key={mediaUrl}
+            onEnded={onEnded}
+            autoPlay={autoPlay}
+            className="max-h-screen"
+            ref={mediaRef as React.RefObject<HTMLAudioElement>}
+          >
+            <source src={mediaUrl} type="audio/mp3" />
+            <track kind="captions" srcLang="en" label="English" />
+            Your browser does not support the audio element.
+          </audio>
+        ) : (
+          <video
+            key={mediaUrl}
+            onEnded={onEnded}
+            autoPlay={autoPlay}
+            className="max-h-screen"
+            ref={mediaRef as React.RefObject<HTMLVideoElement>}
+          >
+            <source src={mediaUrl} type="video/mp4" />
+            <track kind="captions" srcLang="en" label="English" />
+            Your browser does not support the video element.
+          </video>
+        )}
+      </div>
     </div>
   );
 };

@@ -22,22 +22,17 @@ const TogglePlay: React.FC<TogglePlayProps> = ({
       }
     };
 
+    const handleClick = (): void => togglePlay();
+
+    const doc = document.getElementById("player");
+    if (!doc) return;
+
+    doc.addEventListener("click", handleClick);
     document.addEventListener("keypress", handleKeyPress);
 
     return () => {
+      doc.removeEventListener("click", handleClick);
       document.removeEventListener("keypress", handleKeyPress);
-    };
-  });
-
-  useEffect(() => {
-    const media = mediaRef.current;
-    if (!media) return;
-
-    const handleClick = (): void => togglePlay();
-    media.addEventListener("click", handleClick);
-
-    return () => {
-      media.removeEventListener("click", handleClick);
     };
   });
 
@@ -45,13 +40,21 @@ const TogglePlay: React.FC<TogglePlayProps> = ({
     const media = mediaRef.current;
     if (media) {
       if (media.paused) {
-        media.play();
-        setIsPlaying(true);
+        playMedia(media);
       } else {
-        media.pause();
-        setIsPlaying(false);
+        pauseMedia(media);
       }
     }
+  };
+
+  const playMedia = (media: HTMLMediaElement): void => {
+    media.play();
+    setIsPlaying(true);
+  };
+
+  const pauseMedia = (media: HTMLMediaElement): void => {
+    media.pause();
+    setIsPlaying(false);
   };
 
   return (
