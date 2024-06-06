@@ -50,7 +50,7 @@ const Controller = ({
         {isPlaying && <PlayOverlay isPlaying={isPlaying} />}
         {!isPlaying && <PauseOverlay isPlaying={isPlaying} />}
       </div>
-      <MediaController>
+      <MediaController mediaRef={mediaRef}>
         <div className="absolute left-0 top-0 flex items-center gap-2 px-8 py-4 text-lg">
           <Playlist
             mediaFiles={playlist}
