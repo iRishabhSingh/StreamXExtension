@@ -1,11 +1,9 @@
+import { MediaProps } from "@/App";
 import React, { useState, useEffect, useRef } from "react";
+import { Progress } from "../ui/progress";
 
 interface MediaTimelineProps {
-  media: {
-    mediaName: string;
-    mediaUrl: string;
-    mediaType: string;
-  };
+  media: MediaProps;
   mediaRef: React.RefObject<HTMLMediaElement>;
 }
 
@@ -91,17 +89,17 @@ const MediaTimeline: React.FC<MediaTimelineProps> = ({ media, mediaRef }) => {
   };
 
   return (
-    <div className="flex h-2 items-center">
-      <div
+    <div className="relative z-10 flex h-2 items-center">
+      <Progress
         ref={progressRef}
+        value={progress}
         onClick={handleTimelineClick}
-        className="h-1 w-full cursor-pointer rounded bg-[#71717A80] transition-all duration-200 hover:h-1.5 hover:rounded-none"
-      >
-        <div
-          style={{ width: `${progress}%` }}
-          className="h-full rounded bg-white"
-        ></div>
-      </div>
+        className="h-1 w-full cursor-pointer rounded bg-[#71717A80] transition-all duration-200 hover:h-1.5"
+      />
+      <div
+        className="absolute top-1/2 -mt-2 h-4 w-4 cursor-pointer rounded-full bg-white"
+        style={{ left: `${progress}%`, transform: "translateX(-50%)" }}
+      ></div>
     </div>
   );
 };
