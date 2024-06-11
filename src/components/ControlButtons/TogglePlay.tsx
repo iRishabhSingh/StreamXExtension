@@ -117,7 +117,7 @@ const TogglePlay: React.FC<TogglePlayProps> = ({
       onClick={togglePlay}
       title={isPlaying ? "Pause" : "Play"}
       aria-label={isPlaying ? "Pause" : "Play"}
-      className="toggle-play hover:bg-transparent"
+      className="toggle-play z-10 hover:bg-transparent"
     >
       {renderIcon()}
     </Button>

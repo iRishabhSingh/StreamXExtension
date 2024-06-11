@@ -48,7 +48,7 @@ const PlaylistItem: React.FC<PlaylistItemProps> = ({
   };
 
   return (
-    <SheetHeader className="m-2">
+    <SheetHeader className="z-10 m-2">
       <Button
         onClick={handleClick}
         className="justify-start overflow-hidden"
@@ -81,7 +81,7 @@ const Playlist: React.FC<PlaylistProps> = ({
 
   return (
     <Sheet>
-      <SheetTrigger asChild>
+      <SheetTrigger asChild className="z-10">
         <Button
           size="icon"
           variant="ghost"
@@ -91,7 +91,7 @@ const Playlist: React.FC<PlaylistProps> = ({
           <ListVideo width={24} height={24} />
         </Button>
       </SheetTrigger>
-      <SheetContent side={"left"}>
+      <SheetContent side="left">
         <SheetHeader>
           <SheetTitle>Playlist</SheetTitle>
         </SheetHeader>

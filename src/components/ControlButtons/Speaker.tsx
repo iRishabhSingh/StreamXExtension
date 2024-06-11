@@ -86,7 +86,7 @@ const Speaker: React.FC<SpeakerProps> = ({
         size="icon"
         variant="ghost"
         onClick={toggleMute}
-        className="hover:bg-transparent"
+        className="z-10 hover:bg-transparent"
         onMouseEnter={() => setIsHovered(true)}
       >
         {getVolumeIcon()}

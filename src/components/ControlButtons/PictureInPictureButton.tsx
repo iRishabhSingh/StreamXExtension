@@ -36,7 +36,7 @@ const PictureInPictureButton: React.FC<PictureInPictureButtonProps> = ({
       size="icon"
       variant="ghost"
       onClick={handlePictureInPicture}
-      className="hover:bg-transparent"
+      className="z-10 hover:bg-transparent"
     >
       <PictureInPicture width={20} height={20} />
     </Button>

@@ -79,7 +79,7 @@ const SettingsButton: React.FC<SettingsButtonProps> = ({ mediaRef }) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild className="z-10">
         <Button
           size="icon"
           variant="ghost"

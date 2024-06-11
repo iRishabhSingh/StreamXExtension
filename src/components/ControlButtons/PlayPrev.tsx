@@ -39,7 +39,7 @@ const PlayPrev: React.FC<PlayPrevProps> = ({
       title="Play Previous"
       onClick={playPrevMedia}
       aria-label="Play Previous"
-      className="hover:bg-transparent"
+      className="z-10 hover:bg-transparent"
     >
       <SkipBack width={20} height={20} />
     </Button>

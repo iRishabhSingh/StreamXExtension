@@ -47,7 +47,7 @@ const PlaybackTime: React.FC<PlaybackTimeProps> = ({ mediaRef }) => {
   const remainingTime = duration - currentTime;
 
   return (
-    <div className="playback-time mx-2 flex items-center justify-center">
+    <div className="playback-time z-10 mx-2 flex items-center justify-center">
       <Button
         variant="ghost"
         className="p-0 text-sm hover:bg-transparent"

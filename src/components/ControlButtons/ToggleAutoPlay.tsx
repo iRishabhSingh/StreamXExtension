@@ -15,7 +15,7 @@ const ToggleAutoPlay: React.FC<ToggleAutoPlayProps> = ({
   }, [setAutoPlay]);
 
   return (
-    <div title="Autoplay" className="m-2 flex items-center justify-center">
+    <div title="Autoplay" className="z-10 m-2 flex items-center justify-center">
       <Switch
         checked={autoPlay}
         onCheckedChange={handleAutoPlay}

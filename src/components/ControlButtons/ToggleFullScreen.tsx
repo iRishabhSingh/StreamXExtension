@@ -68,7 +68,7 @@ const ToggleFullScreen: React.FC = () => {
       size="icon"
       variant="ghost"
       onClick={toggleFullScreen}
-      className="toggle-fullscreen hover:bg-transparent"
+      className="toggle-fullscreen z-10 hover:bg-transparent"
       title={isFullScreen ? "Exit Fullscreen" : "Fullscreen"}
       aria-label={isFullScreen ? "Exit Fullscreen" : "Fullscreen"}
     >

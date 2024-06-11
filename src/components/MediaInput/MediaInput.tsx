@@ -93,7 +93,7 @@ const MediaInput: React.FC<MediaInputProps> = ({
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild className="z-10">
         <Button
           size="icon"
           variant="ghost"

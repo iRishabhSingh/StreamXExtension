@@ -42,7 +42,7 @@ const PlayNext: React.FC<PlayNextProps> = ({
       title="Play Next"
       aria-label="Play Next"
       onClick={playNextMedia}
-      className="hover:bg-transparent"
+      className="z-10 hover:bg-transparent"
     >
       <SkipForward width={20} height={20} />
     </Button>
