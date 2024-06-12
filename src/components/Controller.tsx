@@ -138,7 +138,7 @@ const Overlays = ({
     <>
       {(isVolumeIncreased || isVolumeDecreased || isMuted) && (
         <span className="absolute left-1/2 top-16 -translate-x-1/2 -translate-y-1/2 transform rounded bg-black bg-opacity-40 px-4 py-2 text-lg">
-          {isMuted ? "0m" : (volume * 100).toFixed(0)}%
+          {isMuted ? "0" : (volume * 100).toFixed(0)}%
         </span>
       )}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-full text-white">
