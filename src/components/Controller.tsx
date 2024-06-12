@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Playlist from "@/Playlist";
 import { MediaProps } from "@/App";
 import Speaker from "./ControlButtons/Speaker";
@@ -45,14 +45,17 @@ const Controller = ({
   const [isMuted, setIsMuted] = useState(false);
   const [isVolumeIncreased, setIsVolumeIncreased] = useState(false);
   const [isVolumeDecreased, setIsVolumeDecreased] = useState(false);
+  const [showVolumeOverlay, setShowVolumeOverlay] = useState<boolean>(false);
 
   return (
     <>
       <Overlays
         isMuted={isMuted}
+        mediaRef={mediaRef}
         isPlaying={isPlaying}
         isVolumeIncreased={isVolumeIncreased}
         isVolumeDecreased={isVolumeDecreased}
+        showVolumeOverlay={showVolumeOverlay}
       />
       <MediaController mediaRef={mediaRef}>
         <TopControls
@@ -79,6 +82,7 @@ const Controller = ({
           setCurrentMediaIndex={setCurrentMediaIndex}
           setIsVolumeIncreased={setIsVolumeIncreased}
           setIsVolumeDecreased={setIsVolumeDecreased}
+          setShowVolumeOverlay={setShowVolumeOverlay}
         />
       </MediaController>
     </>
@@ -90,33 +94,72 @@ interface OverlayProps {
   isPlaying: boolean;
   isVolumeIncreased: boolean;
   isVolumeDecreased: boolean;
+  showVolumeOverlay: boolean;
+  mediaRef: React.RefObject<HTMLMediaElement>;
 }
 
-const Overlays: React.FC<OverlayProps> = ({
+const Overlays = ({
   isMuted,
+  mediaRef,
   isPlaying,
   isVolumeIncreased,
   isVolumeDecreased,
-}) => (
-  <>
-    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-full text-white">
-      {isPlaying ? (
-        <PlayOverlay isPlaying={isPlaying} />
-      ) : (
-        <PauseOverlay isPlaying={isPlaying} />
+}: OverlayProps) => {
+  const [volume, setVolume] = useState<number>(1.0);
+  const mediaCallbackRef = useRef<HTMLMediaElement | null>(null);
+
+  useEffect(() => {
+    const media = mediaRef.current;
+    if (media) {
+      mediaCallbackRef.current = media;
+      const handleVolumeChange = () => {
+        setVolume(media.volume);
+      };
+
+      media.addEventListener("volumechange", handleVolumeChange);
+
+      return () => {
+        media.removeEventListener("volumechange", handleVolumeChange);
+      };
+    }
+  }, [mediaRef]);
+
+  useEffect(() => {
+    if (
+      mediaCallbackRef.current &&
+      mediaCallbackRef.current.volume !== volume
+    ) {
+      setVolume(mediaCallbackRef.current.volume);
+    }
+    console.log(volume);
+  }, [volume]);
+
+  return (
+    <>
+      {(isVolumeIncreased || isVolumeDecreased || isMuted) && (
+        <span className="absolute left-1/2 top-16 -translate-x-1/2 -translate-y-1/2 transform rounded bg-black bg-opacity-40 px-4 py-2 text-lg">
+          {isMuted ? "0m" : (volume * 100).toFixed(0)}%
+        </span>
       )}
-    </div>
-    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-full text-white">
-      {isMuted && <MuteOverlay muted={isMuted} />}
-      {isVolumeDecreased && !isVolumeIncreased && (
-        <LowVolumeOverlay volumeDecreased={isVolumeDecreased} />
-      )}
-      {isVolumeIncreased && !isVolumeDecreased && (
-        <HighVolumeOverlay volumeIncreased={isVolumeIncreased} />
-      )}
-    </div>
-  </>
-);
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-full text-white">
+        {isPlaying ? (
+          <PlayOverlay isPlaying={isPlaying} />
+        ) : (
+          <PauseOverlay isPlaying={isPlaying} />
+        )}
+      </div>
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-full text-white">
+        {isMuted && <MuteOverlay muted={isMuted} />}
+        {isVolumeDecreased && !isVolumeIncreased && (
+          <LowVolumeOverlay volumeDecreased={isVolumeDecreased} />
+        )}
+        {isVolumeIncreased && !isVolumeDecreased && (
+          <HighVolumeOverlay volumeIncreased={isVolumeIncreased} />
+        )}
+      </div>
+    </>
+  );
+};
 
 interface TopControlProps {
   playlist: MediaProps[];
@@ -158,6 +201,7 @@ interface BottomControlProps {
   setCurrentMediaIndex: React.Dispatch<React.SetStateAction<number>>;
   setIsVolumeIncreased: React.Dispatch<React.SetStateAction<boolean>>;
   setIsVolumeDecreased: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowVolumeOverlay: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const BottomControls: React.FC<BottomControlProps> = ({
@@ -176,8 +220,9 @@ const BottomControls: React.FC<BottomControlProps> = ({
   setCurrentMediaIndex,
   setIsVolumeIncreased,
   setIsVolumeDecreased,
+  setShowVolumeOverlay,
 }) => (
-  <div className="absolute bottom-0 left-0 right-0 mb-4 flex flex-col gap-2 px-8">
+  <div className="absolute bottom-0 left-0 right-0 z-10 mb-4 flex flex-col gap-2 px-8">
     <MediaTimeline media={media} mediaRef={mediaRef} />
     <div className="flex justify-between">
       <div className="flex gap-2" onMouseLeave={() => setIsHovered(false)}>
@@ -202,6 +247,7 @@ const BottomControls: React.FC<BottomControlProps> = ({
           setIsHovered={setIsHovered}
           setVolumeIncreased={setIsVolumeIncreased}
           setVolumeDecreased={setIsVolumeDecreased}
+          setShowVolumeOverlay={setShowVolumeOverlay}
         />
         <PlaybackTime mediaRef={mediaRef} />
       </div>

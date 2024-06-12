@@ -9,6 +9,7 @@ interface SpeakerProps {
   setIsHovered: React.Dispatch<React.SetStateAction<boolean>>;
   setVolumeIncreased: React.Dispatch<React.SetStateAction<boolean>>;
   setVolumeDecreased: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowVolumeOverlay: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Speaker: React.FC<SpeakerProps> = ({
@@ -18,20 +19,27 @@ const Speaker: React.FC<SpeakerProps> = ({
   setIsHovered,
   setVolumeDecreased,
   setVolumeIncreased,
+  setShowVolumeOverlay,
 }) => {
   const [volume, setVolume] = useState<number>(1.0); // Initial volume between 0 and 1
   const [isMuted, setIsMuted] = useState<boolean>(false);
+
+  const showVolumeChange = useCallback(() => {
+    setShowVolumeOverlay(true);
+    setTimeout(() => setShowVolumeOverlay(false), 1000);
+  }, [setShowVolumeOverlay]);
 
   const toggleMute = useCallback(() => {
     if (mediaRef.current) {
       const newMutedState = !isMuted;
       mediaRef.current.muted = newMutedState;
       setMuted(newMutedState);
-      setTimeout(() => setMuted(false), 1500);
+      setTimeout(() => setMuted(false), 500);
       setIsMuted(newMutedState);
       setVolumeIncreased(!newMutedState);
+      showVolumeChange();
     }
-  }, [isMuted, mediaRef, setMuted, setVolumeIncreased]);
+  }, [isMuted, mediaRef, setMuted, setVolumeIncreased, showVolumeChange]);
 
   const increaseVolume = useCallback(() => {
     const media = mediaRef.current;
@@ -42,7 +50,8 @@ const Speaker: React.FC<SpeakerProps> = ({
       if (newVolume > 0 && !isMuted) setMuted(false);
       setVolumeDecreased(false);
       setVolumeIncreased(true);
-      setTimeout(() => setVolumeIncreased(false), 1500);
+      setTimeout(() => setVolumeIncreased(false), 500);
+      showVolumeChange();
     }
   }, [
     volume,
@@ -50,6 +59,7 @@ const Speaker: React.FC<SpeakerProps> = ({
     mediaRef,
     setMuted,
     setVolume,
+    showVolumeChange,
     setVolumeDecreased,
     setVolumeIncreased,
   ]);
@@ -63,18 +73,20 @@ const Speaker: React.FC<SpeakerProps> = ({
       setVolumeIncreased(false);
       if (newVolume === 0) {
         setMuted(true);
-        setTimeout(() => setMuted(false), 1500);
+        setTimeout(() => setMuted(false), 500);
         setVolumeDecreased(false);
       } else {
         setVolumeDecreased(true);
-        setTimeout(() => setVolumeDecreased(false), 1500);
+        setTimeout(() => setVolumeDecreased(false), 500);
       }
+      showVolumeChange();
     }
   }, [
     volume,
     mediaRef,
     setMuted,
     setVolume,
+    showVolumeChange,
     setVolumeDecreased,
     setVolumeIncreased,
   ]);
@@ -105,6 +117,7 @@ const Speaker: React.FC<SpeakerProps> = ({
     if (mediaRef.current) {
       mediaRef.current.volume = newVolume;
     }
+    showVolumeChange();
   };
 
   const getVolumeIcon = () => {
@@ -139,8 +152,7 @@ const Speaker: React.FC<SpeakerProps> = ({
             value={volume}
             aria-label="Volume Control"
             onChange={handleVolumeChange}
-            onMouseEnter={() => setIsHovered(true)}
-            className="h-[4px] w-full cursor-pointer rounded-full bg-gray-200 outline-none"
+            className="h-[4px] w-full cursor-pointer rounded-full outline-none"
           />
         </div>
       )}
