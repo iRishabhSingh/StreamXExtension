@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Pause } from "lucide-react";
-import "./PlayPauseOverlay.css";
+import "./Overlay.css";
 
 const PlayPauseOverlay: React.FC<{ isPlaying: boolean }> = ({ isPlaying }) => {
   const [shouldAnimate, setShouldAnimate] = useState(false);

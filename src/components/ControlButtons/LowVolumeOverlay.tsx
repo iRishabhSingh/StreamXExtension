@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { Volume1 } from "lucide-react";
 import "./Overlay.css";
 
-const PlayOverlay: React.FC<{ isPlaying: boolean }> = ({ isPlaying }) => {
+const LowVolumeOverlay: React.FC<{ volumeDecreased: boolean }> = ({
+  volumeDecreased,
+}) => {
   const [shouldAnimate, setShouldAnimate] = useState(false);
 
   useEffect(() => {
@@ -12,7 +15,7 @@ const PlayOverlay: React.FC<{ isPlaying: boolean }> = ({ isPlaying }) => {
     }, 1500);
 
     return () => clearTimeout(timeoutId);
-  }, [isPlaying]);
+  }, [volumeDecreased]);
 
   return (
     <div
@@ -20,9 +23,9 @@ const PlayOverlay: React.FC<{ isPlaying: boolean }> = ({ isPlaying }) => {
         shouldAnimate ? "animate-grow-and-fade" : "hidden"
       }`}
     >
-      <img src="/streamx.png" alt="Play" width={80} height={80} />
+      <Volume1 width={40} height={40} />
     </div>
   );
 };
 
-export default PlayOverlay;
+export default LowVolumeOverlay;
