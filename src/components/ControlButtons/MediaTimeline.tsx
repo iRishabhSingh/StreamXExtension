@@ -5,9 +5,16 @@ import { Progress } from "../ui/progress";
 interface MediaTimelineProps {
   media: MediaProps;
   mediaRef: React.RefObject<HTMLMediaElement>;
+  setRewinded: React.Dispatch<React.SetStateAction<boolean>>;
+  setForwarded: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const MediaTimeline: React.FC<MediaTimelineProps> = ({ media, mediaRef }) => {
+const MediaTimeline: React.FC<MediaTimelineProps> = ({
+  media,
+  mediaRef,
+  setRewinded,
+  setForwarded,
+}) => {
   const [progress, setProgress] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const progressRef = useRef<HTMLDivElement>(null);
@@ -53,6 +60,15 @@ const MediaTimeline: React.FC<MediaTimelineProps> = ({ media, mediaRef }) => {
       const timeAdjustment = keyMap[event.key as KeyEvent];
       if (timeAdjustment !== undefined) {
         current.currentTime += timeAdjustment;
+        if (timeAdjustment === -5 || timeAdjustment === -10) {
+          setRewinded(true);
+          setTimeout(() => setRewinded(false), 1000);
+        }
+
+        if (timeAdjustment === 5 || timeAdjustment === 10) {
+          setForwarded(true);
+          setTimeout(() => setForwarded(false), 1000);
+        }
       }
     };
 
@@ -74,7 +90,7 @@ const MediaTimeline: React.FC<MediaTimelineProps> = ({ media, mediaRef }) => {
       current.removeEventListener("timeupdate", updateProgress);
       current.removeEventListener("loadedmetadata", updateDuration);
     };
-  }, [duration, mediaRef, media]);
+  }, [duration, mediaRef, media, setRewinded, setForwarded]);
 
   const handleTimelineClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,

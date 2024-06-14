@@ -18,6 +18,8 @@ import LowVolumeOverlay from "./ControlButtons/LowVolumeOverlay";
 import ToggleFullScreen from "./ControlButtons/ToggleFullScreen";
 import HighVolumeOverlay from "./ControlButtons/HighVolumeOverlay";
 import PictureInPictureButton from "./ControlButtons/PictureInPictureButton";
+import ForwardOverlay from "./ControlButtons/ForwardOverlay";
+import RewindOverlay from "./ControlButtons/RewindOverlay";
 
 interface ControllerProps {
   media: MediaProps;
@@ -40,9 +42,11 @@ const Controller = ({
   currentMediaIndex,
   setCurrentMediaIndex,
 }: ControllerProps) => {
+  const [isMuted, setIsMuted] = useState(false);
+  const [rewinded, setRewinded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  const [forwarded, setForwarded] = useState(false);
   const [isVolumeIncreased, setIsVolumeIncreased] = useState(false);
   const [isVolumeDecreased, setIsVolumeDecreased] = useState(false);
   const [showVolumeOverlay, setShowVolumeOverlay] = useState<boolean>(false);
@@ -52,7 +56,9 @@ const Controller = ({
       <Overlays
         isMuted={isMuted}
         mediaRef={mediaRef}
+        rewinded={rewinded}
         isPlaying={isPlaying}
+        forwarded={forwarded}
         isVolumeIncreased={isVolumeIncreased}
         isVolumeDecreased={isVolumeDecreased}
         showVolumeOverlay={showVolumeOverlay}
@@ -69,11 +75,15 @@ const Controller = ({
           mediaRef={mediaRef}
           playlist={playlist}
           autoPlay={autoPlay}
+          rewinded={rewinded}
+          forwarded={forwarded}
           isPlaying={isPlaying}
           isHovered={isHovered}
           setIsMuted={setIsMuted}
           setAutoPlay={setAutoPlay}
           setPlaylist={setPlaylist}
+          setRewinded={setRewinded}
+          setForwarded={setForwarded}
           setIsPlaying={setIsPlaying}
           setIsHovered={setIsHovered}
           currentMediaIndex={currentMediaIndex}
@@ -91,7 +101,9 @@ const Controller = ({
 
 interface OverlayProps {
   isMuted: boolean;
+  rewinded: boolean;
   isPlaying: boolean;
+  forwarded: boolean;
   isVolumeIncreased: boolean;
   isVolumeDecreased: boolean;
   showVolumeOverlay: boolean;
@@ -101,7 +113,9 @@ interface OverlayProps {
 const Overlays = ({
   isMuted,
   mediaRef,
+  rewinded,
   isPlaying,
+  forwarded,
   isVolumeIncreased,
   isVolumeDecreased,
 }: OverlayProps) => {
@@ -140,6 +154,16 @@ const Overlays = ({
         <span className="absolute left-1/2 top-16 -translate-x-1/2 -translate-y-1/2 transform rounded bg-black bg-opacity-40 px-4 py-2 text-lg">
           {isMuted ? "0" : (volume * 100).toFixed(0)}%
         </span>
+      )}
+      {forwarded && (
+        <div className="absolute left-2/3 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-full text-white">
+          <ForwardOverlay forwarded={forwarded} />
+        </div>
+      )}
+      {rewinded && (
+        <div className="absolute left-1/3 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-full text-white">
+          <RewindOverlay rewinded={rewinded} />
+        </div>
       )}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-full text-white">
         {isPlaying ? (
@@ -188,6 +212,8 @@ interface BottomControlProps {
   isMuted: boolean;
   media: MediaProps;
   autoPlay: boolean;
+  rewinded: boolean;
+  forwarded: boolean;
   isHovered: boolean;
   isPlaying: boolean;
   playlist: MediaProps[];
@@ -197,6 +223,8 @@ interface BottomControlProps {
   mediaRef: React.RefObject<HTMLMediaElement>;
   setIsMuted: React.Dispatch<React.SetStateAction<boolean>>;
   setAutoPlay: React.Dispatch<React.SetStateAction<boolean>>;
+  setRewinded: React.Dispatch<React.SetStateAction<boolean>>;
+  setForwarded: React.Dispatch<React.SetStateAction<boolean>>;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   setIsHovered: React.Dispatch<React.SetStateAction<boolean>>;
   setPlaylist: React.Dispatch<React.SetStateAction<MediaProps[]>>;
@@ -215,7 +243,9 @@ const BottomControls: React.FC<BottomControlProps> = ({
   isHovered,
   setIsMuted,
   setAutoPlay,
+  setRewinded,
   setPlaylist,
+  setForwarded,
   setIsPlaying,
   setIsHovered,
   currentMediaIndex,
@@ -225,7 +255,12 @@ const BottomControls: React.FC<BottomControlProps> = ({
   setShowVolumeOverlay,
 }) => (
   <div className="absolute bottom-0 left-0 right-0 z-10 mb-4 flex flex-col gap-2 px-8">
-    <MediaTimeline media={media} mediaRef={mediaRef} />
+    <MediaTimeline
+      media={media}
+      mediaRef={mediaRef}
+      setRewinded={setRewinded}
+      setForwarded={setForwarded}
+    />
     <div className="flex justify-between">
       <div className="flex gap-2" onMouseLeave={() => setIsHovered(false)}>
         <PlayPrev
