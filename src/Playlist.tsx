@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import { MediaProps } from "./App";
 import { Button } from "./components/ui/button";
+import { Separator } from "./components/ui/separator";
 
 interface PlaylistProps {
   mediaFiles: MediaProps[];
@@ -92,9 +93,10 @@ const Playlist: React.FC<PlaylistProps> = ({
         </Button>
       </SheetTrigger>
       <SheetContent side="left">
-        <SheetHeader>
+        <SheetHeader className="pb-2">
           <SheetTitle>Playlist</SheetTitle>
         </SheetHeader>
+        <Separator />
         {mediaFiles.map((media, index) => (
           <PlaylistItem
             media={media}

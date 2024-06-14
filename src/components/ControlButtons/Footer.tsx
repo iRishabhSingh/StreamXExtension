@@ -15,10 +15,7 @@ const Footer = () => {
 
       <div className="attribution flex items-center gap-2 p-2">
         <Avatar className="avatar h-10 w-10">
-          <AvatarImage
-            src="https://avatars.githubusercontent.com/u/88267760"
-            alt="Profile picture of Rishabh Singh"
-          />
+          <AvatarImage src="/me.png" alt="Profile picture of Rishabh Singh" />
           <AvatarFallback className="avatar-fallback font-bold">
             RS
           </AvatarFallback>
