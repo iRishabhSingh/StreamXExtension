@@ -1,25 +1,21 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import Playlist from "@/Playlist";
 import { MediaProps } from "@/App";
+import Overlays from "@/components/Overlays";
+
+import MediaInput from "./MediaInput/MediaInput";
+import MediaController from "./MediaController/MediaController";
+
 import Speaker from "./ControlButtons/Speaker";
 import PlayNext from "./ControlButtons/PlayNext";
 import PlayPrev from "./ControlButtons/PlayPrev";
-import MediaInput from "./MediaInput/MediaInput";
 import TogglePlay from "./ControlButtons/TogglePlay";
-import MuteOverlay from "./ControlButtons/MuteOverlay";
-import PlayOverlay from "./ControlButtons/PlayOverlay";
-import PauseOverlay from "./ControlButtons/PauseOverlay";
 import PlaybackTime from "./ControlButtons/PlaybackTime";
 import MediaTimeline from "./ControlButtons/MediaTimeline";
 import SettingsButton from "./ControlButtons/SettingsButton";
 import ToggleAutoPlay from "./ControlButtons/ToggleAutoPlay";
-import MediaController from "./MediaController/MediaController";
-import LowVolumeOverlay from "./ControlButtons/LowVolumeOverlay";
 import ToggleFullScreen from "./ControlButtons/ToggleFullScreen";
-import HighVolumeOverlay from "./ControlButtons/HighVolumeOverlay";
 import PictureInPictureButton from "./ControlButtons/PictureInPictureButton";
-import ForwardOverlay from "./ControlButtons/ForwardOverlay";
-import RewindOverlay from "./ControlButtons/RewindOverlay";
 
 interface ControllerProps {
   media: MediaProps;
@@ -95,94 +91,6 @@ const Controller = ({
           setShowVolumeOverlay={setShowVolumeOverlay}
         />
       </MediaController>
-    </>
-  );
-};
-
-interface OverlayProps {
-  isMuted: boolean;
-  rewinded: boolean;
-  isPlaying: boolean;
-  forwarded: boolean;
-  isVolumeIncreased: boolean;
-  isVolumeDecreased: boolean;
-  showVolumeOverlay: boolean;
-  mediaRef: React.RefObject<HTMLMediaElement>;
-}
-
-const Overlays = ({
-  isMuted,
-  mediaRef,
-  rewinded,
-  isPlaying,
-  forwarded,
-  isVolumeIncreased,
-  isVolumeDecreased,
-}: OverlayProps) => {
-  const [volume, setVolume] = useState<number>(1.0);
-  const mediaCallbackRef = useRef<HTMLMediaElement | null>(null);
-
-  useEffect(() => {
-    const media = mediaRef.current;
-    if (media) {
-      mediaCallbackRef.current = media;
-      const handleVolumeChange = () => {
-        setVolume(media.volume);
-      };
-
-      media.addEventListener("volumechange", handleVolumeChange);
-
-      return () => {
-        media.removeEventListener("volumechange", handleVolumeChange);
-      };
-    }
-  }, [mediaRef]);
-
-  useEffect(() => {
-    if (
-      mediaCallbackRef.current &&
-      mediaCallbackRef.current.volume !== volume
-    ) {
-      setVolume(mediaCallbackRef.current.volume);
-    }
-    console.log(volume);
-  }, [volume]);
-
-  return (
-    <>
-      {(isVolumeIncreased || isVolumeDecreased || isMuted) && (
-        <span className="absolute left-1/2 top-16 -translate-x-1/2 -translate-y-1/2 transform rounded bg-black bg-opacity-40 px-4 py-2 text-lg">
-          {isMuted ? "0" : (volume * 100).toFixed(0)}%
-        </span>
-      )}
-      {forwarded && (
-        <div className="absolute left-2/3 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-full text-white">
-          <ForwardOverlay forwarded={forwarded} />
-        </div>
-      )}
-      {rewinded && (
-        <div className="absolute left-1/3 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-full text-white">
-          <RewindOverlay rewinded={rewinded} />
-        </div>
-      )}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-full text-white">
-        {isPlaying ? (
-          <PlayOverlay isPlaying={isPlaying} />
-        ) : (
-          <PauseOverlay isPlaying={isPlaying} />
-        )}
-      </div>
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-full text-white">
-        {isMuted && !isVolumeIncreased && !isVolumeDecreased && (
-          <MuteOverlay muted={isMuted} />
-        )}
-        {isVolumeDecreased && !isVolumeIncreased && (
-          <LowVolumeOverlay volumeDecreased={isVolumeDecreased} />
-        )}
-        {isVolumeIncreased && !isVolumeDecreased && (
-          <HighVolumeOverlay volumeIncreased={isVolumeIncreased} />
-        )}
-      </div>
     </>
   );
 };
